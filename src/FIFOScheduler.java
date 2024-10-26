@@ -3,9 +3,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class FIFOScheduler {
-    private Queue<Process> readyQueue;
-    private Queue<Process> waitQueue;
+public class FIFOScheduler implements SchedulingAlgorithm {
+    private final Queue<Process> readyQueue;
+    private final Queue<Process> waitQueue;
 
     public FIFOScheduler(List<Process> processes) {
         //도착 시간순으로 정렬
@@ -63,6 +63,7 @@ public class FIFOScheduler {
     }
 
     private void printFinalOutput(List<Process> allProcesses) {
+        System.out.println("FIFO:");
         for (Process process : allProcesses) {
             System.out.print(process.getPid() + " | ");
             for (String status : process.getTimelines()) {
