@@ -29,12 +29,12 @@ public class FIFOScheduler {
             }
 
             //프로세스 상태 기록
-            updateProcessStates(allProcesses, currentProcess);
-
-            currentTime++;
             if (currentProcess != null) {
                 currentProcess.decrementRemainingTime();
             }
+            updateProcessStates(allProcesses, currentProcess);
+
+            currentTime++;
         }
 
         //최종 상태 출력
@@ -55,9 +55,9 @@ public class FIFOScheduler {
     private void updateProcessStates(List<Process> allProcesses, Process runningProcess) {
         for (Process process : allProcesses) {
             if (process == runningProcess) {
-                process.recordStatus("■");
+                process.recordRunningStatus();
             } else {
-                process.recordStatus("□");
+                process.recordNotRunningStatus();
             }
         }
     }

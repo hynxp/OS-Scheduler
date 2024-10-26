@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Process {
+    public static final String RUNNING_STATE = "■";
+    public static final String NOT_RUNNING_STATE = "□";
+    
     private String pid;
     private int arrivalTime;
     private int serviceTime;
@@ -40,7 +43,11 @@ public class Process {
         return timelines;
     }
 
-    public void recordStatus(String status) {
-        timelines.add(status);
+    public void recordRunningStatus() {
+        timelines.add(RUNNING_STATE);
+    }
+
+    public void recordNotRunningStatus() {
+        timelines.add(NOT_RUNNING_STATE);
     }
 }
