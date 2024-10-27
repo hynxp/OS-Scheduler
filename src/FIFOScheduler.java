@@ -1,16 +1,12 @@
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class FIFOScheduler implements SchedulingAlgorithm {
-    private final Queue<Process> readyQueue;
+public class FIFOScheduler extends Scheduler {
     private final Queue<Process> waitQueue;
 
     public FIFOScheduler(List<Process> processes) {
-        //도착 시간순으로 정렬
-        processes.sort(Comparator.comparingInt(Process::getArrivalTime));
-        readyQueue = new LinkedList<>();
+        super(processes);
         waitQueue = new LinkedList<>(processes);
     }
 
@@ -48,28 +44,8 @@ public class FIFOScheduler implements SchedulingAlgorithm {
         }
     }
 
-    private Process getNextProcess() {
-        return readyQueue.poll();
-    }
-
-    private void updateProcessStates(List<Process> allProcesses, Process runningProcess) {
-        for (Process process : allProcesses) {
-            if (process == runningProcess) {
-                process.recordRunningStatus();
-            } else {
-                process.recordNotRunningStatus();
-            }
-        }
-    }
-
-    private void printFinalOutput(List<Process> allProcesses) {
-        System.out.println("FIFO:");
-        for (Process process : allProcesses) {
-            System.out.print(process.getPid() + " | ");
-            for (String status : process.getTimelines()) {
-                System.out.print(status + " ");
-            }
-            System.out.println();
-        }
+    @Override
+    protected String titleForFinalOutput() {
+        return "FIFO:";
     }
 }

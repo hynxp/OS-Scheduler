@@ -1,20 +1,15 @@
-import java.util.Comparator;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
 
-public class RoundRobinScheduler implements SchedulingAlgorithm {
-    private Deque<Process> readyQueue;
-    private List<Process> allProcesses;
+public class RoundRobinScheduler extends Scheduler {
+
     private final int timeSlice;
 
     public RoundRobinScheduler(List<Process> processes, int timeSlice) {
-        processes.sort(Comparator.comparingInt(Process::getArrivalTime));
-        this.readyQueue = new LinkedList<>();
-        this.allProcesses = processes;
+        super(processes);
         this.timeSlice = timeSlice;
     }
 
+    @Override
     public void run() {
         int currentTime = 0;
 
@@ -48,10 +43,6 @@ public class RoundRobinScheduler implements SchedulingAlgorithm {
         printFinalOutput(allProcesses);
     }
 
-    private Process getNextProcess() {
-        return readyQueue.poll();
-    }
-
     private void moveToReadyQueue(int currentTime) {
         for (Process process : allProcesses) {
             if (process.getArrivalTime() == currentTime && !readyQueue.contains(process)) {
@@ -60,24 +51,8 @@ public class RoundRobinScheduler implements SchedulingAlgorithm {
         }
     }
 
-    private void updateProcessStates(List<Process> allProcesses, Process runningProcess) {
-        for (Process process : allProcesses) {
-            if (process == runningProcess) {
-                process.recordRunningStatus();
-            } else {
-                process.recordNotRunningStatus();
-            }
-        }
-    }
-
-    private void printFinalOutput(List<Process> allProcesses) {
-        System.out.println("RR: ts" + timeSlice);
-        for (Process process : allProcesses) {
-            System.out.print(process.getPid() + " | ");
-            for (String status : process.getTimelines()) {
-                System.out.print(status + " ");
-            }
-            System.out.println();
-        }
+    @Override
+    protected String titleForFinalOutput() {
+        return "RR: ts" + timeSlice;
     }
 }

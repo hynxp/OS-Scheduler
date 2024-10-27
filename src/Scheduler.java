@@ -1,40 +1,42 @@
-import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
-public class Scheduler {
+public abstract class Scheduler implements SchedulingAlgorithm {
+    protected Queue<Process> readyQueue;
+    protected List<Process> allProcesses;
 
-    private static final String[] processNames = {"A", "B", "C", "D", "E"};
-
-    public static void main(String[] args) {
-        // FIFO 스케줄러 실행
-        SchedulingAlgorithm fifo = new FIFOScheduler(createProcesses());
-        fifo.run();
-
-        SchedulingAlgorithm rr1 = new RoundRobinScheduler(createProcesses(), 1);
-        rr1.run();
-
-        SchedulingAlgorithm rr4 = new RoundRobinScheduler(createProcesses(), 4);
-        rr4.run();
-
-//        Scanner sc = new Scanner(System.in);
-//        System.out.println("5개 프로세스의 arrival time, service time을 입력해 주세요. ex) 0,3");
-//        for (int i = 0; i < 5; i++) {
-//            String[] split = sc.nextLine().split(",");
-//            int arrivalTime = Integer.parseInt(split[0]);
-//            int serviceTime = Integer.parseInt(split[1]);
-//
-//            Process process = new Process(processNames[i], arrivalTime, serviceTime);
-//            processes.add(process);
-//        }
+    public Scheduler(List<Process> processes) {
+        processes.sort(Comparator.comparingInt(Process::getArrivalTime));
+        readyQueue = new LinkedList<>();
+        this.allProcesses = processes;
     }
 
-    private static List<Process> createProcesses() {
-        List<Process> processes = new ArrayList<>();
-        processes.add(new Process("A", 0, 3));
-        processes.add(new Process("B", 2, 6));
-        processes.add(new Process("C", 4, 4));
-        processes.add(new Process("D", 6, 5));
-        processes.add(new Process("E", 8, 2));
-        return processes;
+    protected Process getNextProcess() {
+        return readyQueue.poll();
+    }
+
+    protected void updateProcessStates(List<Process> allProcesses, Process runningProcess) {
+        for (Process process : allProcesses) {
+            if (process == runningProcess) {
+                process.recordRunningStatus();
+            } else {
+                process.recordNotRunningStatus();
+            }
+        }
+    }
+
+    protected abstract String titleForFinalOutput();
+
+    protected void printFinalOutput(List<Process> allProcesses) {
+        System.out.println(titleForFinalOutput());
+        for (Process process : allProcesses) {
+            System.out.print(process.getPid() + " | ");
+            for (String status : process.getTimelines()) {
+                System.out.print(status + " ");
+            }
+            System.out.println();
+        }
     }
 }
