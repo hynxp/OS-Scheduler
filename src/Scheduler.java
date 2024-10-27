@@ -10,8 +10,11 @@ public class Scheduler {
         SchedulingAlgorithm fifo = new FIFOScheduler(createProcesses());
         fifo.run();
 
-        SchedulingAlgorithm rr = new RoundRobinScheduler(createProcesses(), 1);
-        rr.run();
+        SchedulingAlgorithm rr1 = new RoundRobinScheduler(createProcesses(), 1);
+        rr1.run();
+
+        SchedulingAlgorithm rr4 = new RoundRobinScheduler(createProcesses(), 4);
+        rr4.run();
 
 //        Scanner sc = new Scanner(System.in);
 //        System.out.println("5개 프로세스의 arrival time, service time을 입력해 주세요. ex) 0,3");
