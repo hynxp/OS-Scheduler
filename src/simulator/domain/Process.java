@@ -1,3 +1,5 @@
+package simulator.domain;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +55,7 @@ public class Process {
 
     @Override
     public String toString() {
-        return "Process{" +
+        return "simulator.domain.Process{" +
                 "pid='" + pid + '\'' +
                 ", arrivalTime=" + arrivalTime +
                 ", serviceTime=" + serviceTime +

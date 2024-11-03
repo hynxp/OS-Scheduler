@@ -1,3 +1,8 @@
+import simulator.domain.Process;
+import simulator.scheduler.FIFOScheduler;
+import simulator.scheduler.RoundRobinScheduler;
+import simulator.scheduler.SchedulingAlgorithm;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +26,7 @@ public class SchedulingSimulator {
 //            int arrivalTime = Integer.parseInt(split[0]);
 //            int serviceTime = Integer.parseInt(split[1]);
 //
-//            Process process = new Process(processNames[i], arrivalTime, serviceTime);
+//            simulator.domain.Process process = new simulator.domain.Process(processNames[i], arrivalTime, serviceTime);
 //            processes.add(process);
 //        }
     }

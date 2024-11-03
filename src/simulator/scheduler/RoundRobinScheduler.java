@@ -1,3 +1,7 @@
+package simulator.scheduler;
+
+import simulator.domain.Process;
+
 import java.util.List;
 
 public class RoundRobinScheduler extends Scheduler {

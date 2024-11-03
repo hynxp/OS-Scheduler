@@ -1,3 +1,7 @@
+package simulator.scheduler;
+
+import simulator.domain.Process;
+
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;

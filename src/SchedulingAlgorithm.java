@@ -1,4 +1,0 @@
-interface SchedulingAlgorithm {
-
-    void run();
-}
